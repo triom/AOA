@@ -3,13 +3,15 @@ CFLAGS=-O2 -g -Wall
 OPTFLAGS=-O3 -g -Wall
 OBJS=driver.o kernel.o rdtsc.o
 
-all:	sgemm
+all:	Sujet11
 
-sgemm:	$(OBJS)
-	$(CC) -o $@ $^
+Sujet11: $(OBJS)
+	$(CC) -o $@ $^ -lm
 
 kernel.o: kernel.c
-	$(CC) $(OPTFLAGS) -D $(OPT) -c $< -o $@
+	$(CC) $(CFLAGS) -c  $< -o $@ -lm
 
 clean:
-	rm -rf $(OBJS) sgemm
+	rm -rf $(OBJS) Sujet11
+	
+	
