@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdint.h>
+ #include <time.h>
 
 #define NB_METAS 31
 
@@ -39,9 +40,15 @@ int main (int argc, char *argv[]) {
    }
 
    int i, m;
+   
+   clock_t start, end;	// to measure time taken
+   double cpu_time_used;
+   
 
    /* get command line arguments */
 
+   start = clock();		// Start time
+   
    int size = atoi (argv[1]); /* matrix size */
    int repw = atoi (argv[2]); /* repetition number */
    int repm = atoi (argv[3]); /* repetition number */
@@ -84,6 +91,8 @@ int main (int argc, char *argv[]) {
       /* print performance */
       printf ("%.2f cycles/FMA\n",  (t2 - t1) / ((float) size * size * size * repm));
 
+      printf ("*************************************\n");
+      
       /* print output */
        print_array (m, a);
 
@@ -92,6 +101,12 @@ int main (int argc, char *argv[]) {
       free (b);
       free (c);
    }
+   
+    	end = clock();		//End time measure
 
+     	cpu_time_used = ((double) (end - start)) / CLOCKS_PER_SEC;	// time of execution
+
+ 	printf ("Temps d'éxécution : %f \n", cpu_time_used);
+ 
    return EXIT_SUCCESS;
 }
