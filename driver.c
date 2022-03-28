@@ -13,7 +13,9 @@ static void init_array (int n, float Tab[n]) {
    int i;
 
    for (i=0; i<n; i++)
+   {
       Tab[i] = (float) rand() / RAND_MAX;
+   }
 }
 
 
@@ -21,7 +23,9 @@ static void print_array (int n, float Tab[n]) {
    int i;
 
    for (i=0; i<n; i++)
+   {
       printf ("%f\n", Tab[i]);
+   }
 }
 
 
@@ -45,34 +49,40 @@ int main (int argc, char *argv[]) {
    for (m=0; m<NB_METAS; m++) {
       /* allocate arrays */
 
-      float (*a)[size] = malloc (size * sizeof a[0]);
-      float (*b)[size] = malloc (size * sizeof b[0]);
-      float (*c)[size] = malloc (size * sizeof c[0]);
+      float (*a) = malloc (size * sizeof (float) );
+      float (*b) = malloc (size * sizeof (float) );
+      float (*c) = malloc (size * sizeof (float) );
       float d[20];
 
       /* init arrays */
       srand(0);
+      init_array (size, a);
       init_array (size, b);
       init_array (size, c);
-      init_array (size, d);
+      init_array (20, d);
 
       /* warmup (repw repetitions in first meta, 1 repet in next metas) */
       if (m == 0) {
          for (i=0; i<repw; i++)
+         {
             baseline (size, a, b, c,d);
+         }
       } else {
          baseline (size, a, b, c,d);
       }
 
       /* measure repm repetitions */
       uint64_t t1 = rdtsc();
+      
       for (i=0; i<repm; i++)
+      {
          baseline (size, a, b, c,d);
+      }
+      
       uint64_t t2 = rdtsc();
 
       /* print performance */
-      printf ("%.2f cycles/FMA\n",
-              (t2 - t1) / ((float) size * size * size * repm));
+      printf ("%.2f cycles/FMA\n",  (t2 - t1) / ((float) size * size * size * repm));
 
       /* print output */
        print_array (m, a);
