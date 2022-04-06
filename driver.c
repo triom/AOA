@@ -89,12 +89,12 @@ int main (int argc, char *argv[]) {
       uint64_t t2 = rdtsc();
 
       /* print performance */
-      printf ("%.2f cycles/FMA\n",  (t2 - t1) / ((float) size * size * size * repm));
+      printf ("%.2f \n",  (t2 - t1) / ((float) size * 20 * repm));
 
-      printf ("*************************************\n");
+     // printf ("*************************************\n");
       
       /* print output */
-       print_array (m, a);
+      // print_array (m, a);
 
       /* free arrays */
       free (a);
